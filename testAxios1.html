@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <button onClick="axiosGet()">get请求 </button>
+</body> 
+<script src="./axios.js"></script>
+<!-- <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script> -->
+<script>
+
+let axios  = new Axios()
+axios.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    config.request = true
+    console.log('成功 request1')
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    console.log('失败 request1')
+    return Promise.reject(error);
+  });
+
+  // 添加响应拦截器
+axios.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    console.log('成功 request2')
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    console.log('失败 request2')
+    return Promise.reject(error);
+  });
+
+  // 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
+    console.log('成功 response1')
+    response.response = true
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    console.log('失败 response1')
+    return Promise.reject(error);
+  });
+  // 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
+    console.log('成功 response2')
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    console.log('失败 response2')
+    return Promise.reject(error);
+  });
+// console.log(axios)
+
+  function axiosGet(){
+    axios.request({
+        url:'http://localhost:53000/data',
+        method:'GET'
+    })
+  }
+</script>
+</html>
